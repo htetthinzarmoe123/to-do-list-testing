@@ -5,18 +5,7 @@
         <div class="col-12 col-md-4">
             <div class="my-5">
               <Title title="Vue Todo App"></Title>
-                <div class="form row mb-3">
-                    <div class="col-10">
-                        <div class="mb-3">
-                          <input type="text" class="form-control form-control-lg" @keyup.enter="create()" placeholder="Say something!" v-model="newMessage">
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn btn-primary btn-lg w-100" @click="create()">
-                            <i class="fas fa-plus-circle"></i>
-                        </button>
-                    </div>
-                </div>
+                  <ListCreate @createList="create"></ListCreate>
                     <div class="d-flex justify-content-center">
                         <p class="mb-0 font-weight-bold ">Job List{{lists.length > 1?"s" : ""}}</p>
 
@@ -44,13 +33,13 @@
 <script>
   import Title from "./components/Title";
   import List from "./components/List";
+  import ListCreate from "./components/ListCreate";
   export default {
     name : "App",
-    components: {Title,List},
+    components: {Title,List,ListCreate},
     data() {
       return {
          currentId : 0,
-            newMessage : "",
             lists : []
       }
     },
@@ -60,16 +49,13 @@
             }
         },
        methods : {
-           create(){
+           create(x){
                this.currentId++
                this.lists.push({
                     id: this.currentId,
-                    message : this.newMessage,
+                    message : x,
                     isDone : false,
-                    isEdit : false,
-                    isDelete : false,
                });
-               this.newMessage = "";
            },
            del(x){
             setTimeout(()=>this.lists= this.lists.filter(el=>el.id !== x),600)
