@@ -18,7 +18,7 @@
                     </div>
                 </div>
                     <div class="d-flex justify-content-center">
-                        <p class="mb-0 font-weight-bold ">Job List {{lists.length > 1? "s" : ""}}</p>
+                        <p class="mb-0 font-weight-bold ">Job List{{lists.length > 1?"s" : ""}}</p>
 
                         <p v-if="lists.length > 0 && doneTotal === lists.length" class="badge bg-success m-auto">
                             All Done <i class="fas fa-check-circle"> </i>
@@ -29,14 +29,10 @@
                         </p>
                     </div>
                     <ul class="list-group">
-                        <li v-for="list in lists" :key="list.id" :class="['list-group-item d-flex justify-content-between align-items-center created',{'deleted':list.isDelete}]" @dblclick="list.isEdit = true">
-                            <input v-if="list.isEdit" type="text" @keyup.enter="list.isEdit = false " v-model="list.message" class="form-control form-control-lg mr-2">
-                            <div v-else class="custom-control custom-checkbox">
-                                <input type="checkbox" v-model="list.isDone" class="custom-control-input" :id="'customCheck1'+list.id">
-                                <label :class="['custom-control-label',{'done':list.isDone}]" :for="'customCheck1'+list.id">{{ list.message }}</label>
-                            </div>
-                            <i class="fas fa-trash-alt text-danger" @click="[list.isDelete=true,del(list.id)]"></i>
-                        </li>
+                       <li v-if="lists.length === 0" class="list-group-item text-center">
+                         This is no job
+                       </li>
+                       <List v-for="list in lists" :key="list.id" :list="list" @del="del"></List>
                     </ul>
             </div>
         </div>
@@ -46,10 +42,11 @@
 </template>
 
 <script>
-  import Title from "./components/Title.vue";
+  import Title from "./components/Title";
+  import List from "./components/List";
   export default {
     name : "App",
-    components: {Title},
+    components: {Title,List},
     data() {
       return {
          currentId : 0,
@@ -81,7 +78,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .done{
             text-decoration: line-through !important;
             animation: shakeX 0.5s;
