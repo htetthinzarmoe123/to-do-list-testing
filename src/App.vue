@@ -4,7 +4,7 @@
       <div class="row justify-content-center">
         <div class="col-12 col-md-4">
             <div class="my-5">
-                <h2 class="text-center mb-4">To do list</h2>
+              <Title title="Vue Todo App"></Title>
                 <div class="form row mb-3">
                     <div class="col-10">
                         <div class="mb-3">
@@ -46,8 +46,10 @@
 </template>
 
 <script>
+  import Title from "./components/Title.vue";
   export default {
     name : "App",
+    components: {Title},
     data() {
       return {
          currentId : 0,
